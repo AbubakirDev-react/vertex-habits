@@ -1,0 +1,140 @@
+
+:root,
+[data-theme="dark"] {
+  /* Surfaces */
+  --bg: #0B0B0F;
+  --bg-secondary: #111116;
+  --bg-hover: #17171D;
+  --surface: #15151B;
+  --surface-hover: #1C1C24;
+  --border: #24242C;
+  --border-hover: #303039;
+
+  /* Brand / primary action */
+  --primary: #6C63FF;
+  --primary-hover: #7D75FF;
+  --primary-active: #5A52E0;
+  --on-primary: #FFFFFF;
+
+  /* Text */
+  --text: #F2F2F5;
+  --text-secondary: #A0A0AC;
+  --text-tertiary: #6B6B76;
+  --text-disabled: #45454E;
+
+  /* Feedback */
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --info: #60A5FA;
+
+  /* Shadows (dark needs stronger, more diffuse shadows) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="light"] {
+  --bg: #FFFFFF;
+  --bg-secondary: #F7F7F9;
+  --bg-hover: #F0F0F3;
+  --surface: #FFFFFF;
+  --surface-hover: #F5F5F8;
+  --border: #E4E4EA;
+  --border-hover: #D1D1D9;
+
+  --primary: #5B52E0;
+  --primary-hover: #4A42C9;
+  --primary-active: #3E37B0;
+  --on-primary: #FFFFFF;
+
+  --text: #14141A;
+  --text-secondary: #55555F;
+  --text-tertiary: #85858F;
+  --text-disabled: #B4B4BC;
+
+  --success: #16A34A;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --info: #2563EB;
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 26, 0.06);
+  --shadow-md: 0 8px 24px -8px rgba(20, 20, 26, 0.12);
+  --shadow-lg: 0 24px 48px -12px rgba(20, 20, 26, 0.18);
+}
+
+:root {
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Fonts */
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Fluid type scale — scales itself between breakpoints, no
+     separate rules needed at xs/sm/md/lg for font-size alone */
+  --fs-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8rem);
+  --fs-sm: clamp(0.875rem, 0.84rem + 0.2vw, 0.9375rem);
+  --fs-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --fs-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --fs-xl: clamp(1.375rem, 1.25rem + 0.6vw, 1.625rem);
+  --fs-2xl: clamp(1.75rem, 1.5rem + 1.2vw, 2.25rem);
+  --fs-3xl: clamp(2.25rem, 1.8rem + 2.2vw, 3.25rem);
+
+  /* Responsive layout tokens — these change per breakpoint below,
+     so components just do padding: var(--container-padding) once */
+  --container-padding: 16px;
+  --container-max: 100%;
+  --grid-gap: 16px;
+}
+
+*{
+  font-family: var(--font-mono);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+}
+
+.primary-btn{
+  padding: 5px 10px;
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  transition: 0.3s all ease;
+  box-shadow: var(--shadow-md);
+}
+.primary-btn:hover{
+  background: var(--primary-hover);
+}
+.add-habit-input{
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.text-secondary{
+  color: var(--text-secondary);
+}
+.DangerBtn{
+  padding: 5px 10px;
+  background: var(--danger);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  transition: 0.3s all ease;
+}
+.DangerBtn:hover{
+  opacity: 0.7;
+}
