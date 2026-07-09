@@ -1,10 +1,26 @@
-import { PrimaryBtn } from "./PrimaryBtn";
 
-export default function AddHabitForm(){
+import { useState, type FormEvent } from "react";
+import Button from "./ui/Button";
+
+type HabitFormProps = {
+  addHabit: (title:string) => void
+}
+
+export default function AddHabitForm({ addHabit }: HabitFormProps){
+  const [title,setTitle] = useState("");
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>){
+    e.preventDefault()
+
+    if(title.trim()==="") return
+    addHabit(title)
+
+    setTitle("")
+  }
   return (
-    <form action="" className="w-full p-3 flex gap-2">
-      <input className="add-habit-input shadow w-full py-1.5 px-3 outline-0 focus-visible:ring-2 focus-visible:ring-(--primary)" type="text" placeholder="New habit..."/>
-      <PrimaryBtn>Add</PrimaryBtn>
+    <form onSubmit={handleSubmit} className="flex gap-2">
+      <input value={title} onChange={e=>setTitle(e.target.value)} className="add-habit-input flex-1 shadow w-full py-2 px-4 outline-0 focus-visible:ring-2 focus-visible:ring-(--primary)" type="text" placeholder="New habit..."/>
+      <Button variant="primary" className="rounded-xl px-4 py-2" disabled={title.trim()===""}>Add Habit</Button>
     </form>
   );
 }
