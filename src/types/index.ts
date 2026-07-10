@@ -15,3 +15,9 @@ export type HabitItemProps = {
   deleteHabit: (id: string) => void
   toggleHabit: (id: string,date: Date) => void
 }
+
+export type CircularProgressProps = {
+  value: number
+  max: number
+  size: number
+}

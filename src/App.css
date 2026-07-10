@@ -144,3 +144,14 @@ body{
   transition: 0.3s all ease;
   box-shadow: var(--shadow-md);
 }
+.today-progress{
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: conic-gradient(
+    var(--primary) cal(var(--progress) * 1%)
+
+    var(--border) 0deg
+  );
+  position: relative;
+}
