@@ -1,4 +1,4 @@
-import { AlignEndHorizontalIcon, Home, LayoutGrid, ListChecks, Plus, Settings } from "lucide-react";
+import { AlignEndHorizontalIcon,  LayoutGrid, ListChecks, Plus, Settings } from "lucide-react";
 import { useState } from "react";
 
 

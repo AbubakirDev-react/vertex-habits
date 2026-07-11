@@ -1,15 +1,44 @@
 import { ChartColumn, ChartNoAxesColumn, Flame } from "lucide-react";
 import HabitList from "../components/HabitList";
 import { useHabit } from "../context/habit.context";
-import { isSameWeek, isToday } from "date-fns";
+import { isSameDay, isSameWeek, isToday } from "date-fns";
 import CircularProgress from "../components/ui/CircularProgress";
 import Header from "../components/Header";
 import { useTheme } from "../context/theme.context";
+import { useDates } from "../context/dates.context";
+import { getLongestStreak } from "../context/habit.context";
 
 
 export default function Dashboard() {
   const {habits} = useHabit();
   const completedToday = habits.filter(h=>h.completions.some(c=>isToday(c))).length
+  const {visibleDates} = useDates();
+
+
+  const calculateWeeklyProgress=()=>{
+
+    const totalTasks = habits.length * 7;
+
+    if(totalTasks === 0) return 0;
+
+    let completedCount = 0;
+    habits.forEach(habit=>{
+      visibleDates.forEach(date=>{
+        if(habit.completions.some(c=>isSameDay(c, date))){
+          completedCount++;
+        }
+      });
+    });
+    return Math.round((completedCount / totalTasks) *100 );
+  }
+  const calculateBestStreak=()=>{
+    if(habits.length===0) return 0;
+
+    const allStreaks = habits.map(habit=>getLongestStreak(habit.completions));
+    return Math.max(...allStreaks)
+  }
+  const bestStreak = calculateBestStreak()
+  const weeklyCompletion = calculateWeeklyProgress();
   return (
 
     <div className="mb-16">
@@ -27,7 +56,7 @@ export default function Dashboard() {
             <Flame />
           </div>
           <div className="flex flex-col gap-1.5">
-            <h3 className="text-2xl">60</h3>
+            <h3 className="text-2xl">{bestStreak}</h3>
             <span className="text-xs text-(--text-secondary)">Best Streak</span>
           </div>
         </div>
@@ -36,7 +65,7 @@ export default function Dashboard() {
             <ChartNoAxesColumn />
           </div>
           <div className="flex flex-col gap-1.5">
-            <h3 className="text-2xl">63%</h3>
+            <h3 className="text-2xl">{weeklyCompletion}%</h3>
             <span className="text-xs text-(--text-secondary)">7-day completion</span>
           </div>
         </div>

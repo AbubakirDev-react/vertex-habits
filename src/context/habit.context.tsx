@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import type { Habit } from "../types"
-import { isSameDay } from "date-fns"
+import { differenceInDays, isSameDay } from "date-fns"
 
 
 
@@ -49,11 +49,43 @@ export function HabitProvider({children}: HabitProviderProps){
       })
     ))
   }
-
-  return <HabitContext.Provider value={{habits,toggleHabit,deleteHabit,addHabit}}>{children}</HabitContext.Provider>
+  
+  return <HabitContext.Provider value={{habits,toggleHabit,deleteHabit,addHabit }}>{children}</HabitContext.Provider>
 }
 
 export function useHabit(){
   const context = useContext(HabitContext)
   return context
+}
+
+export function getLongestStreak(completions: Date[] | string[]): number {
+  if (!completions || completions.length === 0) return 0;
+  
+  const sortedDates = completions
+    .map(date => typeof date === 'string' ? new Date(date) : date)
+    .filter(date => !isNaN(date.getTime()))
+    .sort((a, b) => a.getTime() - b.getTime());
+  
+  if (sortedDates.length === 0) return 0;
+  
+  let longestStreak = 1;
+  let currentStreak = 1;
+  
+  for (let i = 1; i < sortedDates.length; i++) {
+    const prevDate = sortedDates[i - 1];
+    const currentDate = sortedDates[i];
+    
+    const diffDays = differenceInDays(currentDate, prevDate);
+    
+    if (diffDays === 1) {
+      currentStreak++;
+    } else if (diffDays > 1) {
+      longestStreak = Math.max(longestStreak, currentStreak);
+      currentStreak = 1;
+    }
+  }
+  
+  longestStreak = Math.max(longestStreak, currentStreak);
+  
+  return longestStreak;
 }

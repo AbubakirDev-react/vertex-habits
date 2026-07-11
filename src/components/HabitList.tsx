@@ -1,8 +1,9 @@
-import { eachDayOfInterval, endOfWeek, startOfWeek,format, isFuture, isSameDay, subDays } from "date-fns"
+import { eachDayOfInterval, endOfWeek, startOfWeek,format, isFuture, isSameDay, subDays, isToday } from "date-fns"
 import Button from "./ui/Button"
 import type { HabitItemProps } from "../types"
 import { useHabit } from "../context/habit.context"
 import { useDates } from "../context/dates.context";
+import { Trash2 } from "lucide-react";
 
 
 
@@ -35,11 +36,11 @@ function HabitItem({habit }: HabitItemProps){
           <span className="text-(--warning)">🔥{streak}</span>
           }
         </div>
-        <Button onClick={()=>deleteHabit(habit.id)} variant="danger">Delete</Button>
+        <Button onClick={()=>deleteHabit(habit.id)} variant="danger"><Trash2/></Button>
       </div>
       <div className="flex gap-3">
         {visibleDates.map(date=>(
-          <Button onClick={()=>toggleHabit(habit.id, date)} variant={habit.completions.some(d=>isSameDay(date,d))?"primary":"secondary"} className="flex flex-1 flex-col items-center gap-0.5 text-xs" key={date.toISOString()} disabled={isFuture(date)}>
+          <Button onClick={()=>toggleHabit(habit.id, date)} variant={habit.completions.some(d=>isSameDay(date,d))?"primary":"secondary"} className={`flex flex-1 flex-col items-center gap-0.5 text-xs ${isToday(date) && 'border-2' }`} key={date.toISOString()} disabled={isFuture(date)}>
             <span>{format(date,"EE")}</span>
             <span>{format(date,"d")}</span>
           </Button>
