@@ -1,12 +1,15 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import type { Habit } from "../types"
 import { differenceInDays, isSameDay } from "date-fns"
+import { Footprints, BookOpen, Sparkles, Droplets, Ban,
+  Dumbbell, Pencil, Coffee, Music, } from "lucide-react";
+
 
 
 
 type Context = {
   habits: Habit[]
-  addHabit: (title: string) => void
+  addHabit: (title: string, icon_key:string) => void
   deleteHabit: (id: string) => void
   toggleHabit: (id:string, date: Date) => void
 }
@@ -22,13 +25,23 @@ export function HabitProvider({children}: HabitProviderProps){
     const saved = localStorage.getItem('habits')
     return saved?JSON.parse(saved):[]
   })
-
+  const ICON_OPTIONS = [
+  { key: "Footprints", Icon: Footprints },
+  { key: "BookOpen", Icon: BookOpen },
+  { key: "Sparkles", Icon: Sparkles },
+  { key: "Droplets", Icon: Droplets },
+  { key: "Ban", Icon: Ban },
+  { key: "Dumbbell", Icon: Dumbbell },
+  { key: "Pencil", Icon: Pencil },
+  { key: "Coffee", Icon: Coffee },
+  { key: "Music", Icon: Music },
+];
   useEffect(()=>{
     localStorage.setItem('habits',JSON.stringify(habits))
   },[habits])
 
-  function addHabit(title: string){
-    setHabits(prev=>[...prev,{id: crypto.randomUUID(),title, completions:[]}])
+  function addHabit(title: string,icon_key: string){
+    setHabits(prev=>[...prev,{id: crypto.randomUUID(),title,icon_key, completions:[]}])
     console.log('Habit list changed' + title + ' has added to list!')  
   }
 
@@ -50,7 +63,7 @@ export function HabitProvider({children}: HabitProviderProps){
     ))
   }
   
-  return <HabitContext.Provider value={{habits,toggleHabit,deleteHabit,addHabit }}>{children}</HabitContext.Provider>
+  return <HabitContext.Provider value={{habits,toggleHabit,deleteHabit,addHabit,ICON_OPTIONS }}>{children}</HabitContext.Provider>
 }
 
 export function useHabit(){

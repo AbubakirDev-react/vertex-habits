@@ -24,12 +24,18 @@ export default function HabitList(){
 
 function HabitItem({habit }: HabitItemProps){
   // const visible_dates = eachDayOfInterval({start: startOfWeek(new Date()),end: endOfWeek(new Date())})
+  const {ICON_OPTIONS} = useHabit();
   const {visibleDates} = useDates();
   const streak = getStreak(habit.completions)
   const {deleteHabit, toggleHabit} = useHabit();
+  const icon = ICON_OPTIONS.find(i=>i.key===habit.icon_key)
   return (
-    <div className="drop-shadow-sm rounded-xl bg-(--surface) p-4 flex flex-col gap-3">
-      <div className="flex items-center justify-between">
+    <div className="drop-shadow-sm rounded-xl bg-(--surface) p-4 flex gap-3 items-center justify-evenly">
+      <div className="px-2">
+        <icon.Icon/>
+      </div>
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <p>{habit.title}</p>
           {streak!==0 &&
@@ -45,6 +51,7 @@ function HabitItem({habit }: HabitItemProps){
             <span>{format(date,"d")}</span>
           </Button>
         ))}
+      </div>
       </div>
     </div>
   )

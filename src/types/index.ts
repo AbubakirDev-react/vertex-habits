@@ -1,6 +1,7 @@
 export type Habit = {
   id: string
   title: string
+  icon_key: string
   completions: Date[]
 }
 

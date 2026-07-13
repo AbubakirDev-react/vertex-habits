@@ -1,32 +1,24 @@
-import { ArrowLeft, Moon, Footprints, BookOpen, Sparkles, Droplets, Ban,
-  Dumbbell, Pencil, Coffee, Music, Bell, MoonStar, Sun } from "lucide-react";
+import { ArrowLeft, MoonStar, Sun } from "lucide-react";
 import { useTheme } from "../context/theme.context";
 import { useState, type FormEvent } from "react";
+import { useHabit } from "../context/habit.context";
+import { useNavigate } from "react-router-dom";
 
 
-const ICON_OPTIONS = [
-  { key: "Footprints", Icon: Footprints },
-  { key: "BookOpen", Icon: BookOpen },
-  { key: "Sparkles", Icon: Sparkles },
-  { key: "Droplets", Icon: Droplets },
-  { key: "Ban", Icon: Ban },
-  { key: "Dumbbell", Icon: Dumbbell },
-  { key: "Pencil", Icon: Pencil },
-  { key: "Coffee", Icon: Coffee },
-  { key: "Music", Icon: Music },
-];
 
 const DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
 export default function Add() {
   const [name,setName] = useState('');
   const {theme,toggleTheme} = useTheme();
+  const {ICON_OPTIONS, addHabit} = useHabit();
   const [icon,setIcon] = useState('Footprints');
-  const [days, setDays] = useState([true, true, false, true, true, false, false]);
-  const toggleDay = (i) => setDays(d=>d.map((v,idx)=>idx===i?v=!v:v))
-  const activeDays = days.filter(Boolean).length;
-  const handleSubmit=(e: FormEvent<HTMLFormElement>)=>{
+  const navigate = useNavigate();
+  const handleSubmit=(e: SubmitEvent)=>{
     e.preventDefault()
+    addHabit(name,icon)
+    navigate('/')
+    console.log(name,icon)
   }
   return (
     <div className="page">
@@ -44,21 +36,12 @@ export default function Add() {
         <label htmlFor="" className="label block">Icon</label>
         <div className="icon-grid">
           {ICON_OPTIONS.map(({key, Icon})=>(
-          <button key={key} className={`icon-btn ${icon===key && 'selected'}`} onClick={()=>setIcon(key)}><Icon size={18} /></button>
+          <button key={key} className={`icon-btn ${icon===key && 'selected'}`} onClick={()=>setIcon(key)} type="button"><Icon size={18} /></button>
         ))}
         </div>
       </div>
-      <div className="field">
-        <label className="label">Repeat On</label>
-        <div className="day-row">
-          {DAYS.map((d,i)=>(
-            <button className={`day-btn ${days[i] && 'selected' }`} onClick={()=>toggleDay(i)}>{d}</button>
-          ))}
-        </div>
-        <p className="day-hint">{activeDays} day{activeDays!==1 && 's'} per week</p>
-      </div>
       <div className="save-bar">
-          <button className="save-btn" disabled={!name.trim()}>Create Habit</button>
+          <button className="save-btn" disabled={!name.trim()} type="submit">Create Habit</button>
         </div>
      </form>
     </div>
