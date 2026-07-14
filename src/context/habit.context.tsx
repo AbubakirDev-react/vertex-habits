@@ -20,11 +20,8 @@ const HabitContext = createContext<null | Context>(null)
 type HabitProviderProps = {
   children: ReactNode
 }
-export function HabitProvider({children}: HabitProviderProps){
-  const [habits,setHabits] = useState<Habit[]>(()=>{
-    const saved = localStorage.getItem('habits')
-    return saved?JSON.parse(saved):[]
-  })
+
+
   const ICON_OPTIONS = [
   { key: "Footprints", Icon: Footprints },
   { key: "BookOpen", Icon: BookOpen },
@@ -36,6 +33,71 @@ export function HabitProvider({children}: HabitProviderProps){
   { key: "Coffee", Icon: Coffee },
   { key: "Music", Icon: Music },
 ];
+
+
+// Morning Run, Read a 20 pages, Meditate, Drink Water, Exercise, No Sugar, Write Journal, Drink Coffee, Listen to Music
+
+const initial_habits = [
+  {
+    id: 1,
+    title: "Morning Run",
+    icon_key: "Footprints",
+    completions: []
+  },
+  {
+    id: 2,
+    title: "Read a 20 pages",
+    icon_key: "BookOpen",
+    completions: []
+  },
+  {
+    id: 3,
+    title: "Meditate",
+    icon_key: "Sparkles",
+    completions: []
+  },
+  {
+    id: 4,
+    title: "Drink Water",
+    icon_key: "Droplets",
+    completions: []
+  },
+  {
+    id: 5,
+    title: "Exercise",
+    icon_key: "Dumbbell",
+    completions: []
+  },
+  {
+    id: 6,
+    title: "No Sugar",
+    icon_key: "Ban",
+    completions: []
+  },
+  {
+    id: 7,
+    title: "Write Journal",
+    icon_key: "Pencil",
+    completions: []
+  },
+  {
+    id: 8,
+    title: "Drink Coffee",
+    icon_key: "Coffee",
+    completions: []
+  },
+  {
+    id: 9,
+    title: "Listen to Music",
+    icon_key: "Music",
+    completions: []
+  }
+]
+export function HabitProvider({children}: HabitProviderProps){
+  const [habits,setHabits] = useState<Habit[]>(()=>{
+    const saved = localStorage.getItem('habits')
+    return saved?JSON.parse(saved):initial_habits
+  })
   useEffect(()=>{
     localStorage.setItem('habits',JSON.stringify(habits))
   },[habits])

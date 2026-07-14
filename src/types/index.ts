@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+
 export type Habit = {
   id: string
   title: string
@@ -18,6 +20,7 @@ export type HabitItemProps = {
 }
 
 export type CircularProgressProps = {
+  children?: ReactNode
   value: number
   max: number
   size: number
