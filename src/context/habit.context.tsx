@@ -128,6 +128,7 @@ export function HabitProvider({children}: HabitProviderProps){
   return <HabitContext.Provider value={{habits,toggleHabit,deleteHabit,addHabit,ICON_OPTIONS }}>{children}</HabitContext.Provider>
 }
 
+
 export function useHabit(){
   const context = useContext(HabitContext)
   return context

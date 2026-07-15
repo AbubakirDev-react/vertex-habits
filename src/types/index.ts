@@ -19,8 +19,12 @@ export type HabitItemProps = {
   toggleHabit: (id: string,date: Date) => void
 }
 
+
+type Variant = "primary" | "secondary" | "success" | "warning" | "error"
+
 export type CircularProgressProps = {
   children?: ReactNode
+  variant?: Variant
   value: number
   max: number
   size: number

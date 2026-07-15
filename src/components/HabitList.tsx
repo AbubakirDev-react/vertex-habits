@@ -30,9 +30,13 @@ function HabitItem({habit }: HabitItemProps){
   const streak = getStreak(habit.completions)
   const {deleteHabit, toggleHabit} = useHabit();
   const icon = ICON_OPTIONS.find(i=>i.key===habit.icon_key)
+
+  const today = new Date()
+  const todayProgress = habit.completions.some(c=>isSameDay(c,today))?1:0
+
   return (
-    <div className="drop-shadow-sm rounded-xl bg-(--surface) p-4 grid grid-cols-6 gap-3 items-center justify-evenly">
-        <CircularProgress value={habit.completions.length} max={visibleDates.length} size={48}>
+    <button onClick={()=>toggleHabit(habit.id, today)} className="drop-shadow-sm rounded-xl bg-(--surface) p-4 grid grid-cols-6 gap-3 items-center justify-evenly cursor-pointer duration-300 border border-(--border) hover:bg-(--surface-hover) active:bg-(--surface-active)">
+        <CircularProgress value={todayProgress} max={1} size={48} variant="success">
           
             <icon.Icon size={18} />
           
@@ -45,15 +49,15 @@ function HabitItem({habit }: HabitItemProps){
       </div>
       <div className="flex gap-3">
         {visibleDates.map(date=>(
-          <Button onClick={()=>toggleHabit(habit.id, date)} variant={habit.completions.some(d=>isSameDay(date,d))?"primary":"secondary"} className={`flex flex-1 flex-col items-center gap-0.5 text-xs ${isToday(date) && 'border-2' }`} key={date.toISOString()} disabled={isFuture(date)}>
-          </Button>
+          <div className={`flex p-1 rounded-full flex-col items-center gap-0.5 text-xs ${habit.completions.some(c=>isSameDay(c,date)) ? 'bg-(--primary)' : 'bg-(--border)'} ${isToday(date) && 'border-2' } ${isFuture(date) && 'opacity-50'}`} key={date.toISOString()}>
+          </div>
         ))}
       </div>
     </div>
       <div className="flex items-center justify-center gap-2">
           {streak!==0 && <p className="text-sm text-(--primary) flex gap-1"><Flame /> {streak}</p> }
       </div>
-    </div>
+    </button>
   )
 }
 
