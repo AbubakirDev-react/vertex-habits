@@ -7,6 +7,7 @@ import { DatesProvider } from './context/dates.context.tsx'
 import ThemeProvider from './context/theme.context.tsx'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './Routes/Routes.tsx'
+import HabitsPage from './previews/habits-page.preview.claude.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
